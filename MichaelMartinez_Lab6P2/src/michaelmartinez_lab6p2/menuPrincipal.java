@@ -60,9 +60,12 @@ public class menuPrincipal extends javax.swing.JFrame {
         jl_listaJugadores = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jt_EQUIPOS = new javax.swing.JTree();
-        jButton1 = new javax.swing.JButton();
+        jb_transferir = new javax.swing.JButton();
         pm_eliminarEquipo = new javax.swing.JPopupMenu();
         jmi_eliminar = new javax.swing.JMenuItem();
+        pp_modificarJugador = new javax.swing.JPopupMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jb_crearEquipo = new javax.swing.JButton();
@@ -160,11 +163,16 @@ public class menuPrincipal extends javax.swing.JFrame {
 
         jLabel11.setText("POSICION");
 
-        sp_edad.setModel(new javax.swing.SpinnerNumberModel(20, 15, 45, 1));
+        sp_edad.setModel(new javax.swing.SpinnerNumberModel(15, 15, 45, 1));
 
         cb_posicion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Portero", "Defensa", "Medio", "Delantero" }));
 
         jb_agregarJugador.setText("AGREGAR");
+        jb_agregarJugador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_agregarJugadorMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_agregarJugadorLayout = new javax.swing.GroupLayout(jd_agregarJugador.getContentPane());
         jd_agregarJugador.getContentPane().setLayout(jd_agregarJugadorLayout);
@@ -228,6 +236,11 @@ public class menuPrincipal extends javax.swing.JFrame {
 
         jl_listaJugadores.setModel(new DefaultListModel()
         );
+        jl_listaJugadores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_listaJugadoresMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jl_listaJugadores);
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("EQUIPOS");
@@ -239,7 +252,12 @@ public class menuPrincipal extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jt_EQUIPOS);
 
-        jButton1.setText("TRANFERIR ->");
+        jb_transferir.setText("TRANFERIR ->");
+        jb_transferir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_transferirMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_transferenciasLayout = new javax.swing.GroupLayout(jd_transferencias.getContentPane());
         jd_transferencias.getContentPane().setLayout(jd_transferenciasLayout);
@@ -249,7 +267,7 @@ public class menuPrincipal extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
-                .addComponent(jButton1)
+                .addComponent(jb_transferir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
@@ -282,7 +300,7 @@ public class menuPrincipal extends javax.swing.JFrame {
                         .addGap(99, 99, 99))
                     .addGroup(jd_transferenciasLayout.createSequentialGroup()
                         .addGap(208, 208, 208)
-                        .addComponent(jButton1)
+                        .addComponent(jb_transferir)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -293,6 +311,23 @@ public class menuPrincipal extends javax.swing.JFrame {
             }
         });
         pm_eliminarEquipo.add(jmi_eliminar);
+
+        jMenuItem4.setText("Modificar");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        pp_modificarJugador.add(jMenuItem4);
+
+        jMenuItem5.setText("Eliminar");
+        jMenuItem5.setToolTipText("");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        pp_modificarJugador.add(jMenuItem5);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -524,6 +559,122 @@ public class menuPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jmi_eliminarActionPerformed
 
+    private void jb_agregarJugadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_agregarJugadorMouseClicked
+        // TODO add your handling code here:
+        DefaultListModel lista=(DefaultListModel)jl_listaJugadores.getModel();
+        String nombre,posicion,edad;
+        nombre=tf_nombreJugador.getText();
+        posicion=(String)cb_posicion.getSelectedItem();
+        edad=String.valueOf(sp_edad.getValue());
+        if (nombre.equals("")||posicion.equals("")||edad.equals("")) {
+            JOptionPane.showMessageDialog(jd_agregarJugador, "Hay un campo vacío");
+        }else{
+            lista.addElement(new jugador(nombre, posicion, edad));
+            jl_listaJugadores.setModel(lista);
+            tf_nombreJugador.setText("");
+            JOptionPane.showMessageDialog(jd_agregarJugador, "Jugador agregado");
+        }
+        
+    }//GEN-LAST:event_jb_agregarJugadorMouseClicked
+
+    private void jl_listaJugadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_listaJugadoresMouseClicked
+        // TODO add your handling code here:
+        DefaultListModel modeloLista=(DefaultListModel)jl_listaJugadores.getModel();
+        
+        if (evt.isMetaDown()) {
+            if (jl_listaJugadores.getSelectedIndex()>=0) {
+                pp_modificarJugador.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        }
+    }//GEN-LAST:event_jl_listaJugadoresMouseClicked
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        DefaultListModel modeloLista=(DefaultListModel)jl_listaJugadores.getModel();
+        String nombre=JOptionPane.showInputDialog(jd_transferencias,"Ingrese el nuevo nombre");
+        int contador=0;
+        for (int i = 0; i < nombre.length(); i++) {
+            if (nombre.charAt(i)>=48 && nombre.charAt(i)<=57) {
+                contador++;
+            }
+        }
+        
+        if (contador==0) {
+            String posicion = JOptionPane.showInputDialog(jd_transferencias, "Ingrese la nueva posicion");
+            String edad = JOptionPane.showInputDialog(jd_transferencias, "Ingrese la nueva edad");
+            int contador2=0;
+            for (int i = 0; i < edad.length(); i++) {
+                if (edad.charAt(i) >= 65 && edad.charAt(i) <= 90) {
+                    contador2++;
+                } else if (edad.charAt(i) >= 97 && edad.charAt(i) <= 122) {
+                    contador2++;
+                }
+            }
+            if (contador2==0) {
+                Object x = modeloLista.getElementAt(jl_listaJugadores.getSelectedIndex());
+                jugador jugador = (jugador) x;
+                jugador.setEdad(edad);
+                jugador.setNombre(nombre);
+                jugador.setPosicion(posicion);
+                 JOptionPane.showMessageDialog(jd_transferencias, "Jugador modificado con éxito");
+            }else{
+                 JOptionPane.showMessageDialog(rootPane, "No se permiten numeros");
+            }
+            
+        }else{
+             JOptionPane.showMessageDialog(rootPane, "No se permiten numeros");
+        }
+       
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        DefaultListModel modeloLista=(DefaultListModel)jl_listaJugadores.getModel();
+        Object x = modeloLista.getElementAt(jl_listaJugadores.getSelectedIndex());
+        modeloLista.removeElement(x);
+        jl_listaJugadores.setModel(modeloLista);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jb_transferirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_transferirMouseClicked
+        // TODO add your handling code here:
+        DefaultListModel modeloLista=(DefaultListModel)jl_listaJugadores.getModel();
+        DefaultTreeModel modeloArbol=(DefaultTreeModel)jt_EQUIPOS.getModel();
+        DefaultMutableTreeNode raiz=(DefaultMutableTreeNode)modeloArbol.getRoot();
+        Object x = modeloLista.getElementAt(jl_listaJugadores.getSelectedIndex());
+        jugador jugadorSeleccionado = (jugador) x;
+        String nombre=jugadorSeleccionado.nombre;
+        String edad=jugadorSeleccionado.edad;
+        String posicion=jugadorSeleccionado.posicion;
+        if (jl_listaJugadores.getSelectedIndex()>=0) {
+            
+            
+//            for (int i = 0; i < raiz.getChildCount(); i++) {
+//                if (raiz.getChildAt(i).toString().equals(pais)) {
+//                    DefaultMutableTreeNode nodoHijo = new DefaultMutableTreeNode(new equipo(nombre, pais, ciudad, estadio));
+//                    ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(nodoHijo);
+//                    
+//                    JOptionPane.showMessageDialog(jd_crearEquipo, "EQUIPO AGREGADO CON ÉXITO");
+//                    contador = 1;
+//                }
+//            }
+//
+//            if (contador == -1) {
+//                equipo nuevoEquipo = new equipo(nombre, pais, ciudad, estadio);
+//                DefaultMutableTreeNode nuevoPais = new DefaultMutableTreeNode((String)nuevoEquipo.getPais());
+//                DefaultMutableTreeNode nodoHijo2 = new DefaultMutableTreeNode(nuevoEquipo);
+//                nuevoPais.add(nodoHijo2);
+//                raiz.add(nuevoPais);
+//                JOptionPane.showMessageDialog(jd_crearEquipo, "EQUIPO AGREGADO CON ÉXITO");
+//            }
+//            tf_nombreEquipo.setText("");
+//            tf_paisEquipo.setText("");
+//            tf_ciudadEquipo.setText("");
+//            tf_estadioEquipo.setText("");
+//            modeloArbol.reload();
+//            
+      }
+    }//GEN-LAST:event_jb_transferirMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -579,7 +730,6 @@ public class menuPrincipal extends javax.swing.JFrame {
 DefaultMutableTreeNode nodo_seleccionado;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cb_posicion;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -600,6 +750,8 @@ DefaultMutableTreeNode nodo_seleccionado;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -609,6 +761,7 @@ DefaultMutableTreeNode nodo_seleccionado;
     private javax.swing.JButton jb_crearEquipo;
     private javax.swing.JButton jb_crearJugador;
     private javax.swing.JButton jb_transferencias;
+    private javax.swing.JButton jb_transferir;
     private javax.swing.JDialog jd_agregarJugador;
     private javax.swing.JDialog jd_crearEquipo;
     private javax.swing.JDialog jd_transferencias;
@@ -616,6 +769,7 @@ DefaultMutableTreeNode nodo_seleccionado;
     private javax.swing.JMenuItem jmi_eliminar;
     private javax.swing.JTree jt_EQUIPOS;
     private javax.swing.JPopupMenu pm_eliminarEquipo;
+    private javax.swing.JPopupMenu pp_modificarJugador;
     private javax.swing.JSpinner sp_edad;
     private javax.swing.JTextField tf_ciudadEquipo;
     private javax.swing.JTextField tf_estadioEquipo;

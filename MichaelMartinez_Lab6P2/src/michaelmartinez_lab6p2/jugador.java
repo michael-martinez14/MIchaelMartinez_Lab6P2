@@ -11,6 +11,13 @@ package michaelmartinez_lab6p2;
 public class jugador {
     public String nombre,posicion, edad;
 
+    public jugador(String nombre, String posicion, String edad) {
+        this.nombre = nombre;
+        this.posicion = posicion;
+        this.edad = edad;
+    }
+    
+
     public String getNombre() {
         return nombre;
     }
