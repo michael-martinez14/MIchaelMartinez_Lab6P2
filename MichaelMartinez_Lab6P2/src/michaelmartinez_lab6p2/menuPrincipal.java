@@ -9,6 +9,10 @@ package michaelmartinez_lab6p2;
  * @author Michael Martínez
  */
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 public class menuPrincipal extends javax.swing.JFrame {
 
     /**
@@ -16,6 +20,7 @@ public class menuPrincipal extends javax.swing.JFrame {
      */
     public menuPrincipal() {
         initComponents();
+        
     }
 
     /**
@@ -56,6 +61,8 @@ public class menuPrincipal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jt_EQUIPOS = new javax.swing.JTree();
         jButton1 = new javax.swing.JButton();
+        pm_eliminarEquipo = new javax.swing.JPopupMenu();
+        jmi_eliminar = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jb_crearEquipo = new javax.swing.JButton();
@@ -82,6 +89,11 @@ public class menuPrincipal extends javax.swing.JFrame {
         jLabel7.setText("ESTADIO");
 
         jb_agregarEQUIPO.setText("AGREGAR");
+        jb_agregarEQUIPO.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_agregarEQUIPOMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_crearEquipoLayout = new javax.swing.GroupLayout(jd_crearEquipo.getContentPane());
         jd_crearEquipo.getContentPane().setLayout(jd_crearEquipoLayout);
@@ -127,9 +139,9 @@ public class menuPrincipal extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(tf_nombreEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jd_crearEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(tf_ciudadEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jd_crearEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tf_ciudadEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addGap(28, 28, 28)
                 .addGroup(jd_crearEquipoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -220,6 +232,11 @@ public class menuPrincipal extends javax.swing.JFrame {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("EQUIPOS");
         jt_EQUIPOS.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jt_EQUIPOS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jt_EQUIPOSMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jt_EQUIPOS);
 
         jButton1.setText("TRANFERIR ->");
@@ -268,6 +285,14 @@ public class menuPrincipal extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
+
+        jmi_eliminar.setText("Eliminar");
+        jmi_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_eliminarActionPerformed(evt);
+            }
+        });
+        pm_eliminarEquipo.add(jmi_eliminar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -343,15 +368,15 @@ public class menuPrincipal extends javax.swing.JFrame {
         );
 
         jMenu1.setText("OPCIONES");
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
-            }
-        });
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/agregar.png"))); // NOI18N
         jMenuItem1.setText("CREAR EQUIPO");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -400,11 +425,6 @@ public class menuPrincipal extends javax.swing.JFrame {
         transferencias();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-        // TODO add your handling code here:
-        crearEquipo();
-    }//GEN-LAST:event_jMenu1ActionPerformed
-
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         crearJugador();
@@ -424,6 +444,85 @@ public class menuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         transferencias();
     }//GEN-LAST:event_jb_transferenciasActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        crearEquipo();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jb_agregarEQUIPOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_agregarEQUIPOMouseClicked
+        // TODO add your handling code here:
+        DefaultTreeModel modeloArbol=(DefaultTreeModel)jt_EQUIPOS.getModel();
+        DefaultMutableTreeNode raiz=(DefaultMutableTreeNode)modeloArbol.getRoot();
+        
+        String nombre,pais,ciudad,estadio;
+        nombre=tf_nombreEquipo.getText();
+        pais=tf_paisEquipo.getText();
+        ciudad=tf_ciudadEquipo.getText();
+        estadio=tf_estadioEquipo.getText();
+        int contador = -1;  
+        if (tf_nombreEquipo.getText().equals("")||
+                tf_paisEquipo.getText().equals("")||
+                tf_ciudadEquipo.getText().equals("")||
+                tf_estadioEquipo.getText().equals("")) {
+            JOptionPane.showMessageDialog(jd_crearEquipo, "Hay un campo vacío");
+        }else {
+            for (int i = 0; i < raiz.getChildCount(); i++) {
+                if (raiz.getChildAt(i).toString().equals(pais)) {
+                    DefaultMutableTreeNode nodoHijo = new DefaultMutableTreeNode(new equipo(nombre, pais, ciudad, estadio));
+                    ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(nodoHijo);
+                    
+                    JOptionPane.showMessageDialog(jd_crearEquipo, "EQUIPO AGREGADO CON ÉXITO");
+                    contador = 1;
+                }
+            }
+
+            if (contador == -1) {
+                equipo nuevoEquipo = new equipo(nombre, pais, ciudad, estadio);
+                DefaultMutableTreeNode nuevoPais = new DefaultMutableTreeNode((String)nuevoEquipo.getPais());
+                DefaultMutableTreeNode nodoHijo2 = new DefaultMutableTreeNode(nuevoEquipo);
+                nuevoPais.add(nodoHijo2);
+                raiz.add(nuevoPais);
+                JOptionPane.showMessageDialog(jd_crearEquipo, "EQUIPO AGREGADO CON ÉXITO");
+            }
+            tf_nombreEquipo.setText("");
+            tf_paisEquipo.setText("");
+            tf_ciudadEquipo.setText("");
+            tf_estadioEquipo.setText("");
+            modeloArbol.reload();
+        }
+        
+  
+    }//GEN-LAST:event_jb_agregarEQUIPOMouseClicked
+
+    private void jt_EQUIPOSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_EQUIPOSMouseClicked
+        // TODO add your handling code here:
+//        DefaultTreeModel modeloArbol=(DefaultTreeModel)jt_EQUIPOS.getModel();
+//        DefaultMutableTreeNode raiz=(DefaultMutableTreeNode)modeloArbol.getRoot();
+        
+//        for (int i = 0; i < raiz.getChildCount(); i++) {
+//            if (raiz.getChildAt(i)) {
+//                
+//            }
+//        }
+        if (evt.isMetaDown()) {
+             DefaultTreeModel modeloArbol = (DefaultTreeModel) jt_EQUIPOS.getModel();
+            Object v = jt_EQUIPOS.getSelectionPath().getLastPathComponent();
+            nodo_seleccionado = (DefaultMutableTreeNode) v;
+            if (nodo_seleccionado.getUserObject() instanceof equipo) {
+                pm_eliminarEquipo.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        }
+       
+    }//GEN-LAST:event_jt_EQUIPOSMouseClicked
+
+    private void jmi_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_eliminarActionPerformed
+        // TODO add your handling code here:
+        DefaultTreeModel modeloArbol=(DefaultTreeModel)jt_EQUIPOS.getModel();
+        modeloArbol.removeNodeFromParent(nodo_seleccionado);
+        JOptionPane.showMessageDialog(jd_transferencias, "Equipo eliminado");
+        
+    }//GEN-LAST:event_jmi_eliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -477,7 +576,7 @@ public class menuPrincipal extends javax.swing.JFrame {
             }
         });
     }
-
+DefaultMutableTreeNode nodo_seleccionado;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cb_posicion;
     private javax.swing.JButton jButton1;
@@ -514,7 +613,9 @@ public class menuPrincipal extends javax.swing.JFrame {
     private javax.swing.JDialog jd_crearEquipo;
     private javax.swing.JDialog jd_transferencias;
     private javax.swing.JList<String> jl_listaJugadores;
+    private javax.swing.JMenuItem jmi_eliminar;
     private javax.swing.JTree jt_EQUIPOS;
+    private javax.swing.JPopupMenu pm_eliminarEquipo;
     private javax.swing.JSpinner sp_edad;
     private javax.swing.JTextField tf_ciudadEquipo;
     private javax.swing.JTextField tf_estadioEquipo;

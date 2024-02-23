@@ -9,7 +9,7 @@ package michaelmartinez_lab6p2;
  * @author Michael Martínez
  */
 public class equipo {
-    public String nombre,pais,ciudad,estadio;
+    private String nombre,pais,ciudad,estadio;
 
     public equipo(String nombre, String pais, String ciudad, String estadio) {
         this.nombre = nombre;
@@ -52,7 +52,7 @@ public class equipo {
 
     @Override
     public String toString() {
-        return "nombre: " + nombre + ", pais: " + pais;
+        return  nombre ;
     }
     
     
