@@ -638,6 +638,7 @@ public class menuPrincipal extends javax.swing.JFrame {
         Object x = modeloLista.getElementAt(jl_listaJugadores.getSelectedIndex());
 //        DefaultMutableTreeNode enArbol=(DefaultMutableTreeNode)x;
 //        modeloArbol.removeNodeFromParent(enArbol);
+//intenté eliminarlo del arbol con varios for, pero no pude
         
         modeloLista.removeElement(x);
         JOptionPane.showMessageDialog(jd_transferencias, "Jugador eliminado");
