@@ -541,7 +541,7 @@ public class menuPrincipal extends javax.swing.JFrame {
 //            }
 //        }
         if (evt.isMetaDown()) {
-             DefaultTreeModel modeloArbol = (DefaultTreeModel) jt_EQUIPOS.getModel();
+            DefaultTreeModel modeloArbol = (DefaultTreeModel) jt_EQUIPOS.getModel();
             Object v = jt_EQUIPOS.getSelectionPath().getLastPathComponent();
             nodo_seleccionado = (DefaultMutableTreeNode) v;
             if (nodo_seleccionado.getUserObject() instanceof equipo) {
@@ -640,14 +640,38 @@ public class menuPrincipal extends javax.swing.JFrame {
         DefaultListModel modeloLista=(DefaultListModel)jl_listaJugadores.getModel();
         DefaultTreeModel modeloArbol=(DefaultTreeModel)jt_EQUIPOS.getModel();
         DefaultMutableTreeNode raiz=(DefaultMutableTreeNode)modeloArbol.getRoot();
+       
         Object x = modeloLista.getElementAt(jl_listaJugadores.getSelectedIndex());
         jugador jugadorSeleccionado = (jugador) x;
-        String nombre=jugadorSeleccionado.nombre;
-        String edad=jugadorSeleccionado.edad;
-        String posicion=jugadorSeleccionado.posicion;
-        if (jl_listaJugadores.getSelectedIndex()>=0) {
+        
+        Object v = jt_EQUIPOS.getSelectionPath().getLastPathComponent();
+            nodo_seleccionado = (DefaultMutableTreeNode) v;
+        
             
-            
+        String nombreJugador=jugadorSeleccionado.nombre;
+        String edadJugador=jugadorSeleccionado.edad;
+        String posicionJugador=jugadorSeleccionado.posicion;
+        
+        String nombre=((equipo)nodo_seleccionado.getUserObject()).getNombre();
+        String pais=((equipo)nodo_seleccionado.getUserObject()).getPais();
+        String ciudad=((equipo)nodo_seleccionado.getUserObject()).getCiudad();
+        String estadio=((equipo)nodo_seleccionado.getUserObject()).getEstadio();
+        if (jl_listaJugadores.getSelectedIndex() >= 0) {
+            if ((nodo_seleccionado.getUserObject())instanceof equipo) {
+                int contador=-1;
+                for (int i = 0; i < nodo_seleccionado.getChildCount(); i++) {
+                    if (posicionJugador.equalsIgnoreCase(nodo_seleccionado.getChildAt(i).toString())) {
+                        DefaultMutableTreeNode nuevaPosicion = new DefaultMutableTreeNode((String)jugadorSeleccionado.getPosicion());
+                        ((DefaultMutableTreeNode)nodo_seleccionado.getChildAt(i)).add(nuevaPosicion);
+                        contador=1;
+                    }
+                }
+                if (contador==-1) {
+                    
+                }
+            }
+
+//            int contador=-1;
 //            for (int i = 0; i < raiz.getChildCount(); i++) {
 //                if (raiz.getChildAt(i).toString().equals(pais)) {
 //                    DefaultMutableTreeNode nodoHijo = new DefaultMutableTreeNode(new equipo(nombre, pais, ciudad, estadio));
@@ -657,20 +681,19 @@ public class menuPrincipal extends javax.swing.JFrame {
 //                    contador = 1;
 //                }
 //            }
-//
-//            if (contador == -1) {
-//                equipo nuevoEquipo = new equipo(nombre, pais, ciudad, estadio);
-//                DefaultMutableTreeNode nuevoPais = new DefaultMutableTreeNode((String)nuevoEquipo.getPais());
-//                DefaultMutableTreeNode nodoHijo2 = new DefaultMutableTreeNode(nuevoEquipo);
-//                nuevoPais.add(nodoHijo2);
-//                raiz.add(nuevoPais);
-//                JOptionPane.showMessageDialog(jd_crearEquipo, "EQUIPO AGREGADO CON ÉXITO");
-//            }
-//            tf_nombreEquipo.setText("");
-//            tf_paisEquipo.setText("");
-//            tf_ciudadEquipo.setText("");
-//            tf_estadioEquipo.setText("");
-//            modeloArbol.reload();
+            
+//            equipo nuevoEquipo = new equipo(nombre, pais, ciudad, estadio);
+//            DefaultMutableTreeNode nuevoPais = new DefaultMutableTreeNode((String) nuevoEquipo.getPais());
+//            DefaultMutableTreeNode nodoHijo2 = new DefaultMutableTreeNode(nuevoEquipo);
+//            nuevoPais.add(nodoHijo2);
+//            raiz.add(nuevoPais);
+            JOptionPane.showMessageDialog(jd_crearEquipo, "EQUIPO AGREGADO CON ÉXITO");
+
+            tf_nombreEquipo.setText("");
+            tf_paisEquipo.setText("");
+            tf_ciudadEquipo.setText("");
+            tf_estadioEquipo.setText("");
+            modeloArbol.reload();
 //            
       }
     }//GEN-LAST:event_jb_transferirMouseClicked
