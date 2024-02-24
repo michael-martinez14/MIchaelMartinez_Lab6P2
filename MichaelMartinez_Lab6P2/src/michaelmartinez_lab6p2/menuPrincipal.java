@@ -572,6 +572,8 @@ public class menuPrincipal extends javax.swing.JFrame {
             lista.addElement(new jugador(nombre, posicion, edad));
             jl_listaJugadores.setModel(lista);
             tf_nombreJugador.setText("");
+            cb_posicion.setSelectedIndex(0);
+            sp_edad.setValue(15);
             JOptionPane.showMessageDialog(jd_agregarJugador, "Jugador agregado");
         }
         
@@ -630,8 +632,15 @@ public class menuPrincipal extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
         DefaultListModel modeloLista=(DefaultListModel)jl_listaJugadores.getModel();
+        DefaultTreeModel modeloArbol=(DefaultTreeModel)jt_EQUIPOS.getModel();
+        DefaultMutableTreeNode raiz=(DefaultMutableTreeNode)modeloArbol.getRoot();
+       
         Object x = modeloLista.getElementAt(jl_listaJugadores.getSelectedIndex());
+//        DefaultMutableTreeNode enArbol=(DefaultMutableTreeNode)x;
+//        modeloArbol.removeNodeFromParent(enArbol);
+        
         modeloLista.removeElement(x);
+        JOptionPane.showMessageDialog(jd_transferencias, "Jugador eliminado");
         jl_listaJugadores.setModel(modeloLista);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -661,14 +670,19 @@ public class menuPrincipal extends javax.swing.JFrame {
                 int contador=-1;
                 for (int i = 0; i < nodo_seleccionado.getChildCount(); i++) {
                     if (posicionJugador.equalsIgnoreCase(nodo_seleccionado.getChildAt(i).toString())) {
-                        DefaultMutableTreeNode nuevaPosicion = new DefaultMutableTreeNode((String)jugadorSeleccionado.getPosicion());
-                        ((DefaultMutableTreeNode)nodo_seleccionado.getChildAt(i)).add(nuevaPosicion);
+                        DefaultMutableTreeNode nuevaJugador = new DefaultMutableTreeNode(jugadorSeleccionado);
+                        ((DefaultMutableTreeNode)nodo_seleccionado.getChildAt(i)).add(nuevaJugador);
                         contador=1;
                     }
                 }
                 if (contador==-1) {
-                    
+                    DefaultMutableTreeNode nuevaPosicion=new DefaultMutableTreeNode((String)jugadorSeleccionado.getPosicion());
+                    DefaultMutableTreeNode nuevoJugador=new DefaultMutableTreeNode(jugadorSeleccionado);
+                    nuevaPosicion.add(nuevoJugador);
+                    nodo_seleccionado.add(nuevaPosicion);
                 }
+                JOptionPane.showMessageDialog(jd_transferencias, "Jugador transferido");
+                modeloArbol.reload();
             }
 
 //            int contador=-1;
@@ -687,14 +701,7 @@ public class menuPrincipal extends javax.swing.JFrame {
 //            DefaultMutableTreeNode nodoHijo2 = new DefaultMutableTreeNode(nuevoEquipo);
 //            nuevoPais.add(nodoHijo2);
 //            raiz.add(nuevoPais);
-            JOptionPane.showMessageDialog(jd_crearEquipo, "EQUIPO AGREGADO CON ÉXITO");
 
-            tf_nombreEquipo.setText("");
-            tf_paisEquipo.setText("");
-            tf_ciudadEquipo.setText("");
-            tf_estadioEquipo.setText("");
-            modeloArbol.reload();
-//            
       }
     }//GEN-LAST:event_jb_transferirMouseClicked
 
